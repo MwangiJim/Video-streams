@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Http video streaming</title>
+    <style>
+        body{
+            margin: 40px auto;
+            max-width: 650px;
+            background-color: #444;
+        }
+        .box{
+            background:#fff;
+            height:30vh;
+            max-height: 30vh;
+            overflow-y: scroll;
+        }
+        .box li{
+            background:#f3f3f3;
+            cursor:pointer;
+            list-style: none;
+            padding:12px 20px;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="searchbar"/>
+    <button type="button" id="btn">Search</button>
+    <div class="box">
+        <li></li>
+    </div>
+    <video id="videoPlayer" width="650" controls muted="muted" autoplay>
+        <source src="/videoplayer" type="video/mp4"/>
+    </video>
+</body>
+<script>
+     let searchbar = document.getElementById('searchbar')
+     let element = document.querySelector('.box')
+     let button = document.querySelector('#btn')
+     const data = [
+     {
+        name:'Simpson1',
+        vid:'./Videos/Simpson1.mp4',
+     },
+     {
+        name:'Simpson2',
+        vid:'./Videos/Simpson2.mp4',
+     },
+     {
+        name:'Simpson3',
+        vid:'./Videos/Simpson3.mp4',
+     },
+     {
+        name:'Simpson4',
+        vid:'./Videos/Simpson4.mp4',
+     },
+     {
+        name:'Simpson5',
+        vid:'./Videos/Simpson5.mp4',
+     },
+    ]
+    let filtered;
+     searchbar.addEventListener('keydown',(event)=>{
+      let res = data.filter((video)=>{
+            return video.name.includes(event.target.value)
+        })
+     filtered = res.map((vid,i)=>{
+       // event.target.value = vid.name
+        return '<li>'+vid.name+'</li>'
+      })
+      element.innerHTML =filtered 
+     })
+     console.log(filtered)
+     button.onclick=()=>{
+        filtered.map((item,i)=>{
+             fetch(`http://localhost:8080/searchId/${item.name}`)
+            .then((res)=>res.json())
+            .then((data)=>console.log(data))
+            .catch((err)=>console.log(err))
+           })
+     }
+</script>
+</html>
