@@ -14,7 +14,7 @@ app.get('/searchId/:id',(req,res)=>{
 })
 app.get('/videoplayer',(req,res)=>{
   //get range
-  const range = req.headers.range;
+  let range = req.headers.range;
   //get params
   const id = req.params.id;
   //set video path
