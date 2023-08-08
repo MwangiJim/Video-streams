@@ -18,7 +18,7 @@ app.get('/videoplayer',(req,res)=>{
   //get params
   const id = req.params.id;
   //set video path
-  const videoPath = './Videos/Simpson1.mp4'
+  const videoPath = './Videos/Simpson.mp4'
 //  console.log(videoPath.substring(16,17))
   //set video size
   const videoSize = fs.statSync(videoPath).size;//used to get size of video
